@@ -1,0 +1,17 @@
+lightgbm
+shap
+pandas
+numpy
+chromadb
+langgraph
+langchain-ollama
+mcp
+pydantic
+scikit-learn
+matplotlib
+tabulate
+fastapi
+uvicorn
+streamlit
+requests
+

@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Data Generation
+      run: |
+        python data_generation/generate_guidelines.py
+        python data_generation/generate_quotes.py
+
+    - name: Train ML Model
+      run: python pricing_model/train_model.py
+
+    - name: Build Vector Store
+      run: python rag/build_vector_store.py
+
+    - name: Run Integration Test (Predict)
+      run: python pricing_model/predict.py
+
+    - name: Build Docker Image
+      run: docker build -t ghcr.io/${{ github.repository_owner }}/insurance-copilot:latest .
+
+    - name: Log in to GitHub Container Registry
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push to GHCR
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        docker push ghcr.io/${{ github.repository_owner }}/insurance-copilot:latest

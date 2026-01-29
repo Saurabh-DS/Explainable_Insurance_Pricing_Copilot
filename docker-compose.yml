@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # The FastAPI Backend
+  insurance-api:
+    build: .
+    container_name: insurance-api
+    depends_on:
+      - ollama-service
+    environment:
+      - OLLAMA_BASE_URL=http://ollama-service:11434
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
+      - ./database:/app/database
+
+  # The Streamlit Frontend
+  insurance-ui:
+    build: .
+    container_name: insurance-ui
+    depends_on:
+      - insurance-api
+    environment:
+      - API_URL=http://insurance-api:8000
+    command: streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+
+  # The local LLM backend
+  ollama-service:
+    image: ollama/ollama:latest
+    container_name: ollama-backend
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    # Auto-pull the model when the container starts
+    entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 5 && ollama pull llama3 && wait"]
+
+volumes:
+  ollama_data:
