@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import os
+import pandas as pd
 
 # Page configuration
 st.set_page_config(
@@ -13,19 +14,19 @@ st.set_page_config(
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 st.title("🛡️ Explainable Insurance Pricing Copilot")
-st.markdown("""
-This tool uses a **LightGBM Pricing Model** with **SHAP explainability** and 
-**Retrieval-Augmented Generation (RAG)** to explain your insurance premiums.
-""")
 
 # Sidebar for inputs
 st.sidebar.header("📋 Customer Profile")
-
 age = st.sidebar.slider("Age", 18, 80, 25)
 postcode_risk = st.sidebar.slider("Postcode Risk (0.0 Safe, 1.0 High)", 0.0, 1.0, 0.5)
 vehicle_group = st.sidebar.slider("Vehicle Group (1 Economy, 50 Luxury)", 1, 50, 15)
 claims_count = st.sidebar.number_input("Number of Claims", 0, 5, 0)
 ncb_years = st.sidebar.number_input("No Claims Bonus (Years)", 0, 10, 3)
+
+st.markdown("""
+This tool uses a **LightGBM Pricing Model** with **SHAP explainability** and 
+**Retrieval-Augmented Generation (RAG)** to explain your insurance premiums.
+""")
 
 if st.sidebar.button("Calculate & Explain Premium"):
     profile = {
@@ -42,15 +43,23 @@ if st.sidebar.button("Calculate & Explain Premium"):
             if response.status_code == 200:
                 result = response.json()
                 explanation = result["explanation"]
+                metrics = result.get("metrics", {})
                 
-                st.success("Analysis Complete!")
+                st.success(f"Analysis Complete! (Total Latency: {result['latency_ms']:.2f}ms)")
+                
                 st.subheader("💡 Copilot's Explanation")
                 st.markdown(explanation)
+                
+                # Telemetry Section
+                with st.expander("🚀 Performance Metrics"):
+                    st.write("Per-node latency breakdown (ms):")
+                    st.json(metrics)
                 
                 # SHAP logging note
                 st.info("ℹ️ This prediction and its SHAP values have been logged to `logs/shap_results.jsonl` for audit compliance.")
             else:
-                st.error(f"Error: {response.status_code} - {response.text}")
+                st.error(f"Error: {response.status_code}")
+                st.code(response.text)
         except Exception as e:
             st.error(f"Could not connect to the API: {e}")
 

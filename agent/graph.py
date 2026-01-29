@@ -11,6 +11,12 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from mcp_server.server import search_guidelines, run_pricing_model, get_similar_quotes
 
+import time
+
+# Reducer for merging metadata dictionaries
+def merge_metadata(left: dict, right: dict) -> dict:
+    return {**left, **right}
+
 # Define the state
 class AgentState(TypedDict):
     messages: Annotated[List[BaseMessage], "The messages in the conversation"]
@@ -19,6 +25,8 @@ class AgentState(TypedDict):
     guidelines: str
     similar_quotes: str
     explanation: str
+    # Telemetry storage in state with a merge reducer to handle concurrent updates
+    metadata: Annotated[dict, merge_metadata]
 
 # Initialize the LLM with environment variable support for base_url
 ollama_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
@@ -31,25 +39,41 @@ llm = ChatOllama(
 # --- Nodes ---
 
 def call_pricing_tool(state: AgentState):
+    start_time = time.time()
     profile = state['profile']
     pricing_data = run_pricing_model(profile)
-    return {"pricing_data": pricing_data}
+    latency = (time.time() - start_time) * 1000
+    return {
+        "pricing_data": pricing_data,
+        "metadata": {"pricing_latency": latency}
+    }
 
 def call_guideline_tool(state: AgentState):
+    start_time = time.time()
     # Determine what to search for based on significant SHAP values
     shap = state['pricing_data']['shap_values']
     # Find the most impactful feature
     top_feature = max(shap, key=lambda k: abs(shap[k]))
     
     guidelines = search_guidelines(top_feature)
-    return {"guidelines": guidelines}
+    latency = (time.time() - start_time) * 1000
+    return {
+        "guidelines": guidelines,
+        "metadata": {"guidelines_latency": latency}
+    }
 
 def call_similarity_tool(state: AgentState):
+    start_time = time.time()
     profile = state['profile']
     similar_quotes = get_similar_quotes(profile)
-    return {"similar_quotes": similar_quotes}
+    latency = (time.time() - start_time) * 1000
+    return {
+        "similar_quotes": similar_quotes,
+        "metadata": {"similarity_latency": latency}
+    }
 
 def generate_explanation(state: AgentState):
+    start_time = time.time()
     profile = state['profile']
     pricing = state['pricing_data']
     guidelines = state['guidelines']
@@ -81,7 +105,11 @@ def generate_explanation(state: AgentState):
     )
     
     response = llm.invoke([SystemMessage(content=prompt), HumanMessage(content="Please explain my insurance premium.")])
-    return {"explanation": response.content}
+    latency = (time.time() - start_time) * 1000
+    return {
+        "explanation": response.content,
+        "metadata": {"llm_latency": latency}
+    }
 
 # --- Construction ---
 
@@ -108,7 +136,11 @@ def run_agent(profile: dict):
         "pricing_data": {},
         "guidelines": "",
         "similar_quotes": "",
-        "explanation": ""
+        "explanation": "",
+        "metadata": {}
     }
     result = graph.invoke(initial_state)
-    return result['explanation']
+    return {
+        "explanation": result['explanation'],
+        "metadata": result['metadata']
+    }

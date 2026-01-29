@@ -37,7 +37,14 @@ services:
     volumes:
       - ollama_data:/root/.ollama
     # Auto-pull the model when the container starts
-    entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 5 && ollama pull llama3 && wait"]
+    entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 20 && ollama pull llama3 && wait"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
 volumes:
   ollama_data:

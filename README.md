@@ -139,3 +139,4 @@ Yes! Because it is containerized, anyone can run your project without installing
 - [Architecture In-Depth](docs/architecture.md)
 - [Interview Q&A](docs/interview_qa.md)
 - [Deployment & CD Guide](docs/deployment.md)
+- [Telemetry & Monitoring](docs/telemetry.md)

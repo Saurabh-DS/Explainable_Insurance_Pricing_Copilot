@@ -2,8 +2,10 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from agent.graph import run_agent
 import uvicorn
-import os
 import sys
+import os
+import time
+import uuid
 
 # Ensure parent directory is in path for imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -23,11 +25,21 @@ def read_root():
 
 @app.post("/explain")
 async def explain_premium(profile: QuoteProfile):
+    request_id = str(uuid.uuid4())
+    start_time = time.time()
+    profile_dict = profile.model_dump()
+    
     try:
-        # Convert Pydantic model to dict
-        profile_dict = profile.model_dump()
-        explanation = run_agent(profile_dict)
-        return {"explanation": explanation}
+        # Run agent
+        result = run_agent(profile_dict)
+        total_latency = (time.time() - start_time) * 1000
+        
+        return {
+            "explanation": result['explanation'],
+            "request_id": request_id,
+            "latency_ms": total_latency,
+            "metrics": result['metadata']
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
