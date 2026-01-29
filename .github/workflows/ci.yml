@@ -39,8 +39,12 @@ jobs:
     - name: Run Integration Test (Predict)
       run: python pricing_model/predict.py
 
+    - name: Set Image Name to Lowercase
+      run: |
+        echo "IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/insurance-copilot:latest" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+
     - name: Build Docker Image
-      run: docker build -t ghcr.io/${{ github.repository_owner }}/insurance-copilot:latest .
+      run: docker build -t ${{ env.IMAGE_NAME }} .
 
     - name: Log in to GitHub Container Registry
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -53,4 +57,4 @@ jobs:
     - name: Push to GHCR
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: |
-        docker push ghcr.io/${{ github.repository_owner }}/insurance-copilot:latest
+        docker push ${{ env.IMAGE_NAME }}
