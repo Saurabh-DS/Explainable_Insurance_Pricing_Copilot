@@ -9,9 +9,11 @@ mcp
 pydantic
 scikit-learn
 matplotlib
+seaborn
 tabulate
 fastapi
 uvicorn
 streamlit
 requests
 
+rank_bm25

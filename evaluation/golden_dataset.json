@@ -1,0 +1,54 @@
+[
+    {
+        "id": 1,
+        "profile": {
+            "age": 25,
+            "postcode_risk": 0.2,
+            "vehicle_group": 10,
+            "claims_count": 0,
+            "ncb_years": 5
+        },
+        "query": "Why is my premium so low?",
+        "expected_key_driver": "vehicle_group",
+        "required_concepts": [
+            "No Claims Bonus",
+            "medium risk",
+            "5 years NCB"
+        ]
+    },
+    {
+        "id": 2,
+        "profile": {
+            "age": 18,
+            "postcode_risk": 0.9,
+            "vehicle_group": 45,
+            "claims_count": 2,
+            "ncb_years": 0
+        },
+        "query": "Explain the high premium amount.",
+        "expected_key_driver": "vehicle_group",
+        "required_concepts": [
+            "high risk postcode",
+            "younger age",
+            "high vehicle group",
+            "claims history"
+        ]
+    },
+    {
+        "id": 3,
+        "profile": {
+            "age": 45,
+            "postcode_risk": 0.5,
+            "vehicle_group": 20,
+            "claims_count": 1,
+            "ncb_years": 10
+        },
+        "query": "What is the primary factor driving my price?",
+        "expected_key_driver": "ncb_years",
+        "required_concepts": [
+            "balanced risk",
+            "long term NCB",
+            "moderate vehicle group"
+        ]
+    }
+]

@@ -1,4 +1,4 @@
-version: '3.8'
+# Explainable Insurance Pricing Copilot - Docker Configuration
 
 services:
   # The FastAPI Backend
@@ -22,9 +22,11 @@ services:
     container_name: insurance-ui
     depends_on:
       - insurance-api
+      - ollama-service
     environment:
       - API_URL=http://insurance-api:8000
-    command: streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0
+      - OLLAMA_BASE_URL=http://ollama-service:11434
+    command: streamlit run ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
     ports:
       - "8501:8501"
 
@@ -37,14 +39,14 @@ services:
     volumes:
       - ollama_data:/root/.ollama
     # Auto-pull the model when the container starts
-    entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 20 && ollama pull llama3 && wait"]
+    entrypoint: [ "/bin/sh", "-c", "ollama serve & sleep 20 && ollama pull llama3 && wait" ]
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
               count: all
-              capabilities: [gpu]
+              capabilities: [ gpu ]
 
 volumes:
   ollama_data:

@@ -1,0 +1,5 @@
+Underwriting Guidelines: No Claims Bonus (NCB)
+        1. 0 years NCB: No discount.
+        2. 1-3 years NCB: 10-20% discount.
+        3. 5+ years NCB: Up to 50% discount.
+        4. Any claim in the last year resets NCB for certain policies.

@@ -1,0 +1,4 @@
+Underwriting Guidelines: Claims History
+        1. 0 claims: Standard base premium.
+        2. 1 claim: 15% surcharge.
+        3. 2+ claims: 40% surcharge or potential declinature for high-performance vehicles.

@@ -1,0 +1,5 @@
+Underwriting Guidelines: Age Policy
+        1. Drivers under 21 are considered high risk and may face a 50% premium surcharge.
+        2. Drivers aged 21-25 are medium risk with a 20% surcharge.
+        3. Drivers aged 26-60 are low risk.
+        4. Drivers over 60 may see a slight increase in premium due to potential medical risks.

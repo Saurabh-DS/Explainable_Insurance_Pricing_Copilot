@@ -1,0 +1,4 @@
+Underwriting Guidelines: Geography
+        1. Postcode risk is a decimal between 0 and 1.
+        2. Risk > 0.8: High-crime or accident-prone area. Surcharge applies.
+        3. Risk < 0.2: Safe rural area. Discount applies.

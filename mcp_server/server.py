@@ -16,7 +16,7 @@ mcp = FastMCP("InsurancePricing")
 # --- Tools ---
 
 @mcp.tool()
-def search_guidelines(query: str) -> str:
+def search_guidelines(query: str, n_results: int = 5) -> str:
     """
     Search underwriting guidelines in ChromaDB for a given query.
     Useful for explaining policy rules related to age, postcode, vehicle, etc.
@@ -30,9 +30,33 @@ def search_guidelines(query: str) -> str:
     
     results = collection.query(
         query_texts=[query],
-        n_results=2
+        n_results=n_results
     )
     
+    docs = results['documents'][0]
+    return "\n---\n".join(docs)
+
+@mcp.tool()
+def search_guidelines_baseline(query: str, n_results: int = 1) -> str:
+    """
+    Naive search of underwriting guidelines (Baseline).
+    Searches the NON-CHUNKED collection for whole documents.
+    """
+    persist_directory = "database/chroma_db"
+    client = chromadb.PersistentClient(path=persist_directory)
+    collection = client.get_collection(
+        name="underwriting_guidelines_baseline",
+        embedding_function=embedding_functions.DefaultEmbeddingFunction()
+    )
+    
+    results = collection.query(
+        query_texts=[query],
+        n_results=n_results
+    )
+    
+    if not results['documents']:
+        return "No guidelines found."
+        
     docs = results['documents'][0]
     return "\n---\n".join(docs)
 

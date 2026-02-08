@@ -1,0 +1,5 @@
+Underwriting Guidelines: Vehicle Groups
+        1. Vehicle groups range from 1 to 50.
+        2. Groups 1-10: Economy cars, low premium.
+        3. Groups 11-30: Family cars, moderate premium.
+        4. Groups 31-50: Luxury and performance cars, high premium.

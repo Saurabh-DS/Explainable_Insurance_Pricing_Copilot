@@ -1,19 +1,70 @@
+# Documentation
+!README.md
+
+# Python artifacts
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
 env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
 venv/
 .venv/
+env/
 bin/
-lib/
-include/
-database/
-logs/
-pricing_model/model.pkl
-data/guidelines/
+
+# Environment variables
 .env
+
+# Large/Generated Model Files
+pricing_model/*.pkl
+pricing_model/*.h5
+pricing_model/*.joblib
+*.model
+
+# Local Databases & Vector Stores
+database/chroma_db/
+database/quotes.db
 .chroma/
 *.db
 !data/guidelines/.gitkeep
+
+# Evaluation Artifacts (Generated)
+evaluation/plots/
+evaluation/reports/
+
+# IDE & OS-specific files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Project specific logs
+logs/
+*.log
+
+# Docker artifacts
+.docker-compose.lock
+
+# Documentation (Included for GitHub)
+#!README.md 
+#docs/ 
