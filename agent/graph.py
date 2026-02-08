@@ -89,7 +89,7 @@ def generate_explanation(state: AgentState):
     user_query = state.get('user_query', "Please explain my insurance premium.")
     
     system_prompt = """
-    You are an Expert AI Insurance Pricing Copilot. Your goal is to assist Pricing Analysts and Underwriters in understanding model decisions.
+    You are an Expert Insurance-Pricing-Copilot-RAG-MCP-AgenticAI. Your goal is to assist Pricing Analysts and Underwriters in understanding model decisions.
     
     Context provided:
     1. Customer Profile: {profile}

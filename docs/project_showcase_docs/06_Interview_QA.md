@@ -1,4 +1,4 @@
-# Comprehensive Interview Q&A: Explainable Insurance Pricing Copilot
+# Comprehensive Interview Q&A: Insurance-Pricing-Copilot-RAG-MCP-AgenticAI
 
 This document prepares you for deep-dive technical and product interviews. It covers the "Whys", the "What Ifs", and the "Alternatives".
 

@@ -1,4 +1,4 @@
-# 01. Project Overview: Explainable AI (XAI) Insurance Pricing Copilot
+# 01. Project Overview: Insurance-Pricing-Copilot-RAG-MCP-AgenticAI
 
 ## The "Why" - Problem Statement
 In the modern insurance industry, pricing models (like Gradient Boosted Trees, Neural Networks) are becoming increasingly complex. While they are accurate, they are **"Black Boxes"**. 

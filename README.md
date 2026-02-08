@@ -1,9 +1,11 @@
-# Explainable Insurance Pricing Framework
+# Insurance-Pricing-Copilot-RAG-MCP-AgenticAI
 
 **An Enterprise-Grade, Containerized Compound AI System for Regulatory-Compliant Insurance Analytics.**
 
+[![RAG](https://img.shields.io/badge/Skill-RAG-blue)](#)
+[![MCP](https://img.shields.io/badge/Skill-MCP-orange)](#)
+[![AgenticAI](https://img.shields.io/badge/Skill-AgenticAI-green)](#)
 [![Docker-Ready](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
-[![Framework](https://img.shields.io/badge/Architecture-Compound_AI-blue)](https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ## Overview

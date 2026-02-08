@@ -1,7 +1,7 @@
 # RAG Pipeline Optimization: Achieving Production-Grade Latency & Accuracy
 
 ## Overview
-This document details the critical optimizations applied to the *Explainable Insurance Pricing Copilot* to transition it from a functional prototype (Baseline) to a high-performance production system (Optimized).
+This document details the critical optimizations applied to the *Insurance-Pricing-Copilot-RAG-MCP-AgenticAI* to transition it from a functional prototype (Baseline) to a high-performance production system (Optimized).
 
 The optimization focused on three key areas:
 1.  **Latency Reduction**: Parallelizing serial tasks and optimizing database/LLM interactions.

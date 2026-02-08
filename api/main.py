@@ -10,7 +10,7 @@ import uuid
 # Ensure parent directory is in path for imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-app = FastAPI(title="Insurance Pricing Copilot API")
+app = FastAPI(title="Insurance-Pricing-Copilot-RAG-MCP-AgenticAI API")
 
 class QuoteProfile(BaseModel):
     age: int

@@ -1,4 +1,4 @@
-# Explainable Insurance Pricing Copilot - Docker Configuration
+# Insurance-Pricing-Copilot-RAG-MCP-AgenticAI - Docker Configuration
 
 services:
   # The FastAPI Backend

@@ -1,4 +1,4 @@
-# Issue Fixing Journey: Explainable Insurance Pricing Copilot
+# Issue Fixing Journey: Insurance-Pricing-Copilot-RAG-MCP-AgenticAI
 
 This document captures the technical challenges encountered during the development and optimization phase, and the systematic approach taken to resolve them.
 

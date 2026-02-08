@@ -14,10 +14,10 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from pipelines.baseline_pipeline import run_baseline_pipeline
 from pipelines.optimized_pipeline import run_optimized_pipeline
 
-st.set_page_config(page_title="Insurance Pricing Analysis System", layout="wide")
+st.set_page_config(page_title="Insurance-Pricing-Copilot-RAG-MCP-AgenticAI", layout="wide")
 
-st.title("Insurance Pricing Analysis System")
-st.markdown("*Decision Support for Pricing Analysts, Underwriters, and Audit Teams*")
+st.title("Insurance-Pricing-Copilot-RAG-MCP-AgenticAI")
+st.markdown("*Enterprise-Grade Decision Support: RAG + MCP + Agentic AI Architecture*")
 
 # --- Custom CSS to Hide Avatars ---
 st.markdown("""
